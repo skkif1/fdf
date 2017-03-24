@@ -12,59 +12,27 @@
 
 #include "fdf.h"
 
-int key_listener(int keycode, void *param)
+int	key_listener(int keycode, void *param)
 {
-    t_map *map;
+	t_map *map;
 
-    map = param;
-    if (keycode == 53)
-    {
-        mlx_destroy_window(map->mlx, map->window);
-        exit(0);
-    }
-        if (keycode == 13 || keycode == 1)
-    {
-        mlx_clear_window(map->mlx, map->window);
-        map->scale = (keycode == 1) ? map->scale - 1 : map->scale + 1;
-        ft_printf("resize");
-        reculc_map(map, 1);
-    }
-    if (keycode == 126 || keycode == 125)
-    {
-        mlx_clear_window(map->mlx, map->window);
-        map->angle_x = (keycode == 125) ? map->angle_x - 0.1 : map->angle_x + 0.1;
-        reculc_map(map, 2);
-    }
-    if (keycode == 123 || keycode == 124)
-    {
-        mlx_clear_window(map->mlx, map->window);
-        map->angle_y = (keycode == 123) ? map->angle_y - 0.1 : map->angle_y + 0.1;
-        reculc_map(map, 3);
-    }
-    if (keycode == 12 || keycode == 14)
-    {
-        mlx_clear_window(map->mlx, map->window);
-        map->angle_z = (keycode == 12) ? map->angle_z - 0.1 : map->angle_z + 0.1;
-        reculc_map(map, 3);
-    }
-        return 0;
+	map = param;
+	if (keycode == 53)
+		cust_exit(map, ft_strnew(1));
+	mlx_clear_window(map->mlx, map->window);
+	if (keycode == 13 || keycode == 1)
+		map->scale = (keycode == 1) ? map->scale - 1 : map->scale + 1;
+	if (keycode == 123 || keycode == 124)
+		map->angle_x = (keycode == 123) ? map->angle_x - 0.1 :
+	map->angle_x + 0.1;
+	if (keycode == 126 || keycode == 125)
+		map->angle_y = (keycode == 126) ? map->angle_y - 0.1 :
+	map->angle_y + 0.1;
+	if (keycode == 12 || keycode == 14)
+		map->angle_z = (keycode == 12) ? map->angle_z - 0.1 :
+	map->angle_z + 0.1;
+	if (keycode == 18)
+		change_color(map);
+	reculc_map(map);
+	return (1);
 }
-
-
-//
-// 1234567890    1230
-//1            1
-//2            2 *
-//3 1 2 3      3
-//4   * 3      0
-//5
-//6
-//7
-//8
-//9
-//0
-//
-//height = width / 2 - width / 2  = 3
-//
-//    5           4
-//width = height / 2 - height = 3 = 1
