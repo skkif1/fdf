@@ -12,35 +12,64 @@
 
 #include "fdf.h"
 
-void make_copy(t_map *map)
+void	make_copy(t_map *map)
 {
-    int i;
-    int j;
+	int i;
+	int j;
 
-    i = 0;
-    j = 0;
-
-    while(i < map->height)
-    {
-        while (j < map->width)
-        {
-            map->copy[i][j] = map->map[i][j];
-            j++;
-        }
-        i++;
-        j = 0;
-    }
+	i = 0;
+	j = 0;
+	while (i < map->height)
+	{
+		while (j < map->width)
+		{
+			map->copy[i][j] = map->map[i][j];
+			j++;
+		}
+		i++;
+		j = 0;
+	}
 }
 
-int normal_round(double num)
+void	cust_exit(t_map *map, const char *str)
 {
-    double res;
-    double size;
+	if (map != 0)
+		mlx_destroy_window(map->mlx, map->window);
+	ft_printf("\n%s\n", str);
+	exit(0);
+}
 
-    res = 0;
-    size = modf(num, &res);
+void	free_list(t_list *lst)
+{
+	t_list *temp;
 
-    if (size > 0.5)
-        return (int)res++;
-    return (int)(res);
+	if (lst != NULL)
+	{
+		while (lst != NULL)
+		{
+			temp = lst;
+			free(lst->content);
+			free(lst);
+			lst = temp->next;
+		}
+	}
+}
+
+void	change_color(t_map *map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < map->height)
+	{
+		while (j < map->width)
+		{
+			map->map[i][j].color += 10;
+			j++;
+		}
+		i++;
+		j = 0;
+	}
 }
